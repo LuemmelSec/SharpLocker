@@ -8,6 +8,19 @@ using System.Runtime.InteropServices;
 
 namespace  SharpLockerLib
 {
+    public class Runner
+    {
+        public static String Run()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            StrResult res = new StrResult();
+            Form1 f = new Form1(ref res);
+            Application.Run(f);
+            return "SharpLocker input: " + res.val;
+        }
+    }
+
     public class StrResult
     {
         public String val { get; set; }

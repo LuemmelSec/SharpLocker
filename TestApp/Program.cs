@@ -6,9 +6,9 @@ namespace ConsoleApplication1
     {
         static void Main(string[] args)
         {
-            String input = SharpLockerLib.Program.Run();
+            String input = SharpLockerLib.Runner.Run();
             Console.WriteLine(input);
-            //Console.ReadKey();
+            Console.ReadKey();
         }
     }
 }
