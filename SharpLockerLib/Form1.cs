@@ -1,6 +1,5 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Threading;
 using System.Windows.Forms;
@@ -21,12 +20,12 @@ namespace  SharpLockerLib
         }
     }
 
-    public class StrResult
+    class StrResult
     {
         public String val { get; set; }
     }
 
-    public partial class Form1 : Form
+    partial class Form1 : Form
     {
         StrResult input;
 
@@ -36,10 +35,13 @@ namespace  SharpLockerLib
             InitializeComponent();
             Taskbar.Hide();
             FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            WindowState = FormWindowState.Normal;
+            WindowState = FormWindowState.Maximized;
             StartPosition = FormStartPosition.Manual;
             Location = new Point(0, 0);
             Size = new Size(Screen.PrimaryScreen.Bounds.Width, Screen.PrimaryScreen.Bounds.Height);
+            // ToDo: Replace with user background image
+            // this requires access to Windows.System.UserProfile.LockScreen.OriginalImageFile.OriginalString
+            // without beeing an UWP app
             Image myimage = new Bitmap(@"C:\Windows\Web\Wallpaper\Windows\img0.jpg");
             BackgroundImage = myimage;
             BackgroundImageLayout = ImageLayout.Stretch;
@@ -47,6 +49,7 @@ namespace  SharpLockerLib
             string userName = System.Environment.UserName.ToString();
             label2.Text = userName;
             label2.BackColor = System.Drawing.Color.Transparent;
+            // ToDo: rework components for proper layout on non 1080p primary screen resoltuions
             int usernameloch = (Convert.ToInt32(Screen.PrimaryScreen.Bounds.Height) / 100) * 64;
             int usericonh = (Convert.ToInt32(Screen.PrimaryScreen.Bounds.Height) / 100) * 29;
             int buttonh = (Convert.ToInt32(Screen.PrimaryScreen.Bounds.Height) / 100) * 64;
@@ -63,14 +66,17 @@ namespace  SharpLockerLib
 
             foreach (var screen in Screen.AllScreens)
             {
-                Thread thread = new Thread(() => WorkThreadFunction(screen));
-                thread.Start();
+                if (!screen.Primary)
+                {
+                    Thread thread = new Thread(() => WorkThreadFunction(screen));
+                    thread.Start();
+                }
             }
 
 
         }
 
-        public class Taskbar
+        class Taskbar
         {
             [DllImport("user32.dll")]
             private static extern int FindWindow(string className, string windowText);
@@ -127,33 +133,21 @@ namespace  SharpLockerLib
         {
             try
             {
-                if (screen.Primary == false)
+                using (Form form = new Form())
                 {
-                    int mostLeft = screen.WorkingArea.Left;
-                    int mostTop = screen.WorkingArea.Top;
-                    Debug.WriteLine(mostLeft.ToString(), mostTop.ToString());
-                    using (Form form = new Form())
-                    {
-                        form.WindowState = FormWindowState.Normal;
-                        form.StartPosition = FormStartPosition.Manual;
-                        form.Location = new Point(mostLeft, mostTop);
-                        form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-                        form.Size = new Size(screen.Bounds.Width, screen.Bounds.Height);
-                        form.BackColor = Color.Black;
-                        form.ShowDialog();
-                    }
+                    form.WindowState = FormWindowState.Normal;
+                    form.StartPosition = FormStartPosition.Manual;
+                    form.Location = new Point(screen.WorkingArea.Left, screen.WorkingArea.Top);
+                    form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                    form.Size = new Size(screen.Bounds.Width, screen.Bounds.Height);
+                    form.BackColor = Color.Black;
+                    form.ShowDialog();
                 }
             }
             catch (Exception ex)
             {
                 // log errors
             }
-        }
-
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void userPic_Click(object sender, EventArgs e)

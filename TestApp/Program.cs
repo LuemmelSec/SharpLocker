@@ -8,7 +8,8 @@ namespace ConsoleApplication1
         {
             String input = SharpLockerLib.Runner.Run();
             Console.WriteLine(input);
-            Console.ReadKey();
+            Console.WriteLine("press key to exit");
+            Console.ReadKey(); // keep console Window open
         }
     }
 }
