@@ -81,7 +81,18 @@
             this.userPic.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.userPic.BackColor = System.Drawing.Color.Transparent;
             this.userPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.userPic.Image = global::SharpLockerLib.Properties.Resources.user_192;
+            System.Drawing.Bitmap usrBmp = global::SharpLockerLib.Properties.Resources.user_192;
+            usrBmp.MakeTransparent();
+            for (int x = 0; x < usrBmp.Width; x++)
+            {
+                for (int y = 0; y < usrBmp.Height; y++)
+                {
+                    System.Drawing.Color c = usrBmp.GetPixel(x, y);
+                    usrBmp.SetPixel(x, y, System.Drawing.Color.FromArgb(0x60, c.R, c.G, c.B));
+                }
+            }
+
+            this.userPic.Image = usrBmp;
             System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
             gp.AddEllipse(0, 0, 199, 199);
             this.userPic.Region = new System.Drawing.Region(gp);

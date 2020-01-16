@@ -21,5 +21,11 @@ The purpose is to allow integration of the pre-compiled NET binary into PowerShe
 * Backwards compatability for Win 7
 * All resolution support
 
+Reworked look (uses only one 3KB image resource):
+
+![Working SharpLocker](https://github.com/mame82/SharpLocker/blob/master/sharplocker_reworked.png?raw=true)
+
+
+Old look:
 
 ![Working SharpLocker](https://github.com/mame82/SharpLocker/blob/master/sharplocker.png?raw=true)
