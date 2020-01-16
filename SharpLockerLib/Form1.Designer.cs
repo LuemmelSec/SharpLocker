@@ -96,13 +96,20 @@
             // confirmBtn
             // 
             this.confirmBtn.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.confirmBtn.AutoSize = true;
-            this.confirmBtn.BackColor = System.Drawing.Color.Transparent;
-            this.confirmBtn.BackgroundImage = global::SharpLockerLib.Properties.Resources.arrow;
+            this.confirmBtn.AutoSize = false;
+            this.confirmBtn.BackColor = System.Drawing.Color.FromArgb(100, System.Drawing.Color.LightGray);
+            this.confirmBtn.FlatAppearance.MouseDownBackColor = System.Drawing.Color.FromArgb(100, System.Drawing.Color.Gray);
+            this.confirmBtn.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(100, System.Drawing.Color.Gray);
+            this.confirmBtn.ForeColor = System.Drawing.Color.GhostWhite;
+            this.confirmBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            //this.confirmBtn.BackgroundImage = global::SharpLockerLib.Properties.Resources.arrow;
             this.confirmBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.confirmBtn.Location = new System.Drawing.Point(597, 324);
+            this.confirmBtn.Location = new System.Drawing.Point(597, 320);
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(45, 38);
+            this.confirmBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", this.confirmBtn.Height / 2);
+            this.confirmBtn.Text = "🡪"; // "⟶"; // "→"; // 🡒
+            this.confirmBtn.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             this.confirmBtn.TabIndex = 9;
             this.confirmBtn.UseVisualStyleBackColor = false;
             this.confirmBtn.Click += new System.EventHandler(this.confirmBtnClick);
