@@ -22,4 +22,4 @@ The purpose is to allow integration of the pre-compiled NET binary into PowerShe
 * All resolution support
 
 
-![Working SharpLocker](https://github.com/Pickfordmatt/SharpLocker/blob/master/sharplocker.png?raw=true)
+![Working SharpLocker](https://github.com/mame82/SharpLocker/blob/master/sharplocker.png?raw=true)

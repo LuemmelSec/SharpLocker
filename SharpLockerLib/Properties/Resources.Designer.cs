@@ -73,59 +73,9 @@ namespace SharpLockerLib.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap button {
+        internal static System.Drawing.Bitmap user_192 {
             get {
-                object obj = ResourceManager.GetObject("button", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap button1 {
-            get {
-                object obj = ResourceManager.GetObject("button1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap button2 {
-            get {
-                object obj = ResourceManager.GetObject("button2", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap thumb_14400082930User {
-            get {
-                object obj = ResourceManager.GetObject("thumb_14400082930User", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap Untitled_1 {
-            get {
-                object obj = ResourceManager.GetObject("Untitled-1", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap usericon {
-            get {
-                object obj = ResourceManager.GetObject("usericon", resourceCulture);
+                object obj = ResourceManager.GetObject("user_192", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

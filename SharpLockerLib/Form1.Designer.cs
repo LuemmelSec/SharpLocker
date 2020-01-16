@@ -81,7 +81,10 @@
             this.userPic.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.userPic.BackColor = System.Drawing.Color.Transparent;
             this.userPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.userPic.Image = global::SharpLockerLib.Properties.Resources.thumb_14400082930User;
+            this.userPic.Image = global::SharpLockerLib.Properties.Resources.user_192;
+            System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
+            gp.AddEllipse(0, 0, 199, 199);
+            this.userPic.Region = new System.Drawing.Region(gp);
             this.userPic.Location = new System.Drawing.Point(345, 31);
             this.userPic.Name = "userPic";
             this.userPic.Size = new System.Drawing.Size(199, 199);

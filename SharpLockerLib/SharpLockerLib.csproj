@@ -29,7 +29,8 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -82,25 +83,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\usericon.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\button1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\button.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Untitled-1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\button1.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\thumb_14400082930User.png" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\arrow.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\user-192.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

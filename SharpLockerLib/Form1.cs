@@ -144,7 +144,7 @@ namespace  SharpLockerLib
                     form.ShowDialog();
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // log errors
             }
