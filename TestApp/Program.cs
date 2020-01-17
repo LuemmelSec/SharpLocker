@@ -10,10 +10,10 @@ namespace ConsoleApplication1
             /*
              * 
             
-            # load UWP namespace Windows.System.UserProfile
-            [Windows.System.UserProfile.LockScreen,Windows.System.UserProfile,ContentType=WindowsRuntime] | Out-Null
             # load SharpLocker NET assembly
             Add-Type -Path .\SharpLockerLib.dll
+            # load UWP namespace Windows.System.UserProfile
+            [Windows.System.UserProfile.LockScreen,Windows.System.UserProfile,ContentType=WindowsRuntime] | Out-Null
             # Invoke SharpLocker (parameter is an optional string pointing to the file with the current user's LockScreen Background)
             [SharpLockerLib.Runner]::Run([Windows.System.UserProfile.LockScreen]::OriginalImageFile.AbsolutePath)
              * 
