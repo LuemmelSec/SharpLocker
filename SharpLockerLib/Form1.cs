@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,6 +9,8 @@ namespace  SharpLockerLib
 {
     public class Runner
     {
+        static Form1 f = null;
+
         public static String Run()
         {
             return Run("");
@@ -25,7 +28,7 @@ namespace  SharpLockerLib
             }
             
             StrResult res = new StrResult();
-            Form1 f;
+            
             if (backGroundPath.Length > 1)
             {
                 f = new Form1(ref res, backGroundPath);
@@ -46,7 +49,7 @@ namespace  SharpLockerLib
                     form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
                     form.Size = new Size(screen.Bounds.Width, screen.Bounds.Height);
                     form.BackColor = Color.Black;
-                    form.Visible = false;
+                    form.Activated += SubForm_Activated;
                     form.Show(f);
                 }
             }
@@ -57,15 +60,23 @@ namespace  SharpLockerLib
             while (!f.IsDisposed)
             {
                 Application.DoEvents();
+                Thread.Sleep(1); // Slow down event loop to avoid high CPU load
             }
- 
+
+            
             return "SharpLocker input: " + res.val;
+        }
+
+        private static void SubForm_Activated(object sender, EventArgs e)
+        {
+            // re-activate main form if one of the screen covering forms got activated
+            if (f != null && f.Visible) { f.Activate(); }
         }
     }
 
     class StrResult
     {
-        public String val { get; set; }
+        public string val { get; set; }
     }
 
     partial class Form1 : Form
